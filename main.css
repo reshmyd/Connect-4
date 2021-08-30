@@ -1,0 +1,210 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body{
+  background-color: #f1e4de;
+  }
+
+h1{
+  width: 100vw;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #96a39e;
+  color: white;
+  letter-spacing: 0.1em;
+}
+
+main{
+  width: 100vw;
+  padding: 0 10px;
+  }
+
+main >div{
+  margin: 30px 0;
+  text-align: center;
+}
+
+h2{
+  color: #333;
+}
+
+.rules{
+  margin: 0 auto;
+  width: 260px;
+}
+
+td{
+  padding: 10px 0;
+}
+
+.rule-number{
+  padding-left: 5px;
+  padding-right: 15px;
+  color: #0b7fab;
+  font-size: 25px;
+}
+
+td.rule-text{
+  text-align: left;
+}
+
+#current-player{
+  margin: 20px;
+}
+
+#result{
+  color: #0b7fab;
+  margin: 30px;
+}
+
+.grid1{
+  display: none;
+}
+
+.grid2{
+  background: #0b7fab;
+  width: 260px;
+  height: 235px;
+  padding: 15px 10px;
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 5px;
+  margin: 0 auto;
+}
+
+.grid2 div{
+  background-color: white ;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+div.yellow{
+  background-color: #f4d75e;
+  border: 1px solid #f4d75e;
+}
+
+div.red{
+  background-color: #e9723d;
+  border: 1px solid #e9723d;
+}
+
+div.win{
+  border: 1px solid black;
+}
+
+.hide{
+  display: none;
+}
+
+button{
+  padding: 10px;
+  font-size: 14px;
+  background: #96a39e;
+  border: 1px solid #96a39e;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+@media only screen and (min-width:750px){
+  .rules{
+    width: 400px;
+  }
+  
+  .grid2{
+    width: 400px;
+    height: 355px;
+  }
+
+  .grid2 div{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  button{
+    margin-top: 10px;
+    font-size: 16px;
+  }
+} 
+
+@media only screen and (min-width:1000px){
+  main{
+    padding: 20px;
+  }
+  
+  h1{
+    font-size: 54px;
+  }
+  
+  h2{
+    font-size: 36px;
+  }
+  
+  h3{
+    font-size: 24px;
+  }
+  
+  #result{
+    font-size: 54px;
+  }
+  
+  .rules{
+    width: 540px;
+  }
+  
+  .rule-number{
+    font-size: 36px;
+  }
+  
+  .rule-text{
+    font-size: 25px;
+  }
+ 
+  .grid1{
+    display: block;
+    width: 540px;
+    height: 70px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 15px 10px;
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 5px;
+  }
+  
+  .grid1 div{
+    background-color: #f1e4de ;
+    }  
+    
+  .grid1 div.yellow{
+    background-color: #f4d75e;
+    border: 1px solid #f4d75e;
+  }
+  
+  .grid1 div.red{
+    background-color: #e9723d;
+    border: 1px solid #e9723d;
+  }
+  
+  .grid2{
+    width: 540px;
+    height: 475px;
+  }
+  
+  .grid1 div, .grid2 div{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  
+  button{
+    font-size: 20px;
+  }
+}
