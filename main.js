@@ -5,28 +5,9 @@ const row_3 = document.querySelectorAll('.row-3')
 const row_4 = document.querySelectorAll('.row-4')
 const row_5 = document.querySelectorAll('.row-5')
 
-let col_0 = document.querySelectorAll('.col-0')
-let col_1 = document.querySelectorAll('.col-1')
-let col_2 = document.querySelectorAll('.col-2')
-let col_3 = document.querySelectorAll('.col-3')
-let col_4 = document.querySelectorAll('.col-4')
-let col_5 = document.querySelectorAll('.col-5')
-let col_6 = document.querySelectorAll('.col-6')
-
+const rows = [row_0, row_1, row_2, row_3, row_4, row_5]
 const pucksOnTop = document.querySelectorAll('.puck')
 const startRestartBtn = document.querySelector('.start-restart')
-
-col_0 = [...col_0].reverse()
-col_1 = [...col_1].reverse()
-col_2 = [...col_2].reverse()
-col_3 = [...col_3].reverse()
-col_4 = [...col_4].reverse()
-col_5 = [...col_5].reverse()
-col_6 = [...col_6].reverse()
-
-const rows = [row_0, row_1, row_2, row_3, row_4, row_5]
-const cols = [col_0, col_1, col_2, col_3, col_4, col_5, col_6]
-
 const result = document.getElementById('result')
 const currentPlayer = document.getElementById('current-player')
 
@@ -35,12 +16,11 @@ let isGameLive
 let play
 
 
-
 //FUNCTIONS
 
 //RESTART FUNCTION 
 
-const startRestartGame = () =>{
+const startRestartGame = () => {
   //Making all cells empty
   for (row of rows) {
     for (cell of row) {
@@ -61,10 +41,9 @@ const startRestartGame = () =>{
 }
 
 
-
 //CONVERTING ClassList OF EACH CELL INTO ARRAY
 
-const getClassListArray = cell =>{
+const getClassListArray = cell => {
   const classes = cell.classList
   return [...classes]
 }
@@ -72,7 +51,7 @@ const getClassListArray = cell =>{
 
 //GETTING POSITION OF EACH CELL IN THE 6*7 GRID
 
-const getRowAndColIndex = cell =>{
+const getRowAndColIndex = cell => {
   const classesArr = getClassListArray(cell)
   const rowIndex = classesArr.find(elem => elem.includes('row'))
   const colIndex = classesArr.find(elem => elem.includes('col'))
@@ -82,8 +61,9 @@ const getRowAndColIndex = cell =>{
 
 //GETTING FIRST EMPTY CELL IN COLUMN TO INSERT COIN
 
-const getFirstEmptyCellInCol = colIndex =>{
-  for (cell of cols[colIndex]) {
+const getFirstEmptyCellInCol = colIndex => {
+  for (let i=0; i<=5; i++) {
+    const cell = rows[i][colIndex]
     const classesArr = getClassListArray(cell)
     if (!classesArr.includes('yellow') && !classesArr.includes('red')) {
       return cell
@@ -95,13 +75,13 @@ const getFirstEmptyCellInCol = colIndex =>{
 
 //FINDING IF CELL IS OCCUPIED BY PLAYER1 OR PLAYER2
 
-const getCellClass = cell =>{
+const getCellClass = cell => {
   const classesArr = getClassListArray(cell)
   if (classesArr.includes('yellow')) {
     return 'yellow'
-  }else if (classesArr.includes('red')) {
+  } else if (classesArr.includes('red')) {
     return 'red'
-  }else {
+  } else {
     return null
   }
 }
@@ -109,7 +89,7 @@ const getCellClass = cell =>{
 
 //CHECKING HORIZONTALLY ACROSS THE ROW TO SEE IF GAME IS FINISHED
 
-const horizontalCheck = (cell, color) =>{
+const horizontalCheck = (cell, color) => {
   const index = getRowAndColIndex(cell)
   const rowIndex = index[0]
   let colIndex = index[1] - 1
@@ -135,7 +115,7 @@ const horizontalCheck = (cell, color) =>{
     }
    
   if (winningArr.length >= 4) {
-    for(let i=0; i<winningArr.length; i++) {
+    for (let i=0; i<winningArr.length; i++) {
       winningArr[i].classList.add('win')
     }
     return true
@@ -145,14 +125,14 @@ const horizontalCheck = (cell, color) =>{
 
 //CHECKING VERTICALLY ACROSS THE COLUMN TO SEE IF GAME IS FINISHED
 
-const verticalCheck = (cell, color) =>{
+const verticalCheck = (cell, color) => {
   const index = getRowAndColIndex(cell)
   let rowIndex = index[0] - 1
   const colIndex = index[1] 
   const winningArr = [cell]
   while (rowIndex >= 0) {
-    if (getCellClass(cols[colIndex][rowIndex]) === color) {
-        winningArr.unshift(cols[colIndex][rowIndex])
+    if (getCellClass(rows[rowIndex][colIndex]) === color) {
+        winningArr.unshift(rows[rowIndex][colIndex])
         rowIndex--
       } else {
         rowIndex = -1
@@ -161,8 +141,8 @@ const verticalCheck = (cell, color) =>{
   
   rowIndex = index[0] + 1
   while (rowIndex <= 5){
-     if (getCellClass(cols[colIndex][rowIndex]) === color) {
-        winningArr.push(cols[colIndex][rowIndex])
+     if (getCellClass(rows[rowIndex][colIndex]) === color) {
+        winningArr.push(rows[rowIndex][colIndex])
         rowIndex++
       } else {
         rowIndex = 6
@@ -180,12 +160,12 @@ const verticalCheck = (cell, color) =>{
 
 //CHECKING DIAGONALLY ACROSS ROW & COLUMN TO SEE IF GAME IS FINISHED
 
-const diagonal1Check =(cell, color) =>{
+const diagonal1Check =(cell, color) => {
   const index = getRowAndColIndex(cell)
   let rowIndex = index[0] - 1
   let colIndex = index[1] - 1
   const winningArr = [cell]
-  while (colIndex >= 0 && rowIndex >= 0){
+  while (colIndex >= 0 && rowIndex >= 0) {
     if (getCellClass(rows[rowIndex][colIndex]) === color) {
         winningArr.unshift(rows[rowIndex][colIndex])
         rowIndex--
@@ -199,11 +179,11 @@ const diagonal1Check =(cell, color) =>{
   rowIndex = index[0] + 1  
   colIndex = index[1] + 1
   while (colIndex <= 6 && rowIndex <= 5) {
-     if(getCellClass(rows[rowIndex][colIndex]) === color){
+     if (getCellClass(rows[rowIndex][colIndex]) === color) {
         winningArr.push(rows[rowIndex][colIndex])
         rowIndex++
         colIndex++
-      }else {
+      } else {
         rowIndex = 6
         colIndex = 7
       }
@@ -220,12 +200,12 @@ const diagonal1Check =(cell, color) =>{
 
 //CHECKING DIAGONAL2 ACROSS ROW & COLUMN TO SEE IF GAME IS FINISHED
 
-const diagonal2Check = (cell, color) =>{
+const diagonal2Check = (cell, color) => {
   const index = getRowAndColIndex(cell)
   let rowIndex = index[0] + 1
   let colIndex = index[1] - 1
   const winningArr = [cell]
-  while (colIndex >= 0 && rowIndex <= 5){
+  while (colIndex >= 0 && rowIndex <= 5) {
     if (getCellClass(rows[rowIndex][colIndex]) === color) {
         winningArr.push(rows[rowIndex][colIndex])
         rowIndex++
@@ -238,7 +218,7 @@ const diagonal2Check = (cell, color) =>{
   
   rowIndex = index[0] - 1 
   colIndex = index[1] + 1
-  while (colIndex <= 6 && rowIndex >= 0){
+  while (colIndex <= 6 && rowIndex >= 0) {
      if (getCellClass(rows[rowIndex][colIndex]) === color) {
         winningArr.unshift(rows[rowIndex][colIndex])
         rowIndex--
@@ -260,7 +240,7 @@ const diagonal2Check = (cell, color) =>{
 
 //CHECKING STATUS OF GAME AFTER EVERY CELL CLICK
 
-const checkStatusOfGame = cell =>{
+const checkStatusOfGame = cell => {
   const color = isYellow ? "red" : "yellow"
   const player = isYellow? "PLAYER 2" : "PLAYER 1"
   if (play < 42) {
@@ -283,7 +263,7 @@ const checkStatusOfGame = cell =>{
 
 //HANDLING MOUSE OUT
 
-const handleCellMouseOut = () =>{
+const handleCellMouseOut = () => {
   pucksOnTop.forEach(puck => {
     puck.classList.remove('yellow')
     puck.classList.remove('red')
@@ -293,13 +273,13 @@ const handleCellMouseOut = () =>{
 
 //HANDLING CELL CLICK
 
-const handleCellClick = event =>{
+const handleCellClick = event => {
   if (isGameLive) {
-    //Remove the puck on top of the grid column
-    handleCellMouseOut()
     const index = getRowAndColIndex(event.target)
     const cell = getFirstEmptyCellInCol(index[1])
     if (cell) {
+      //Remove the puck on top of the grid column
+      handleCellMouseOut()
       if (isYellow) {
         cell.classList.add('yellow')
         isYellow = false
@@ -312,7 +292,7 @@ const handleCellClick = event =>{
         currentPlayer.style.color = "darkgoldenrod" 
         }
       play++
-      if (play >= 7){
+      if (play >= 7) {
         checkStatusOfGame(cell)
       }
     } else {
@@ -324,7 +304,7 @@ const handleCellClick = event =>{
 
 //HANDLING CELL MOUSE OVER
 
-const handleCellMouseOver = event =>{
+const handleCellMouseOver = event => {
   if (isGameLive) {
     const index = getRowAndColIndex(event.target)
     if (isYellow) {
