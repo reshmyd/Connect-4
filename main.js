@@ -326,3 +326,4 @@ for (row of rows) {
 //EVENT LISTENER FOR RESTART BUTTON
 
 startRestartBtn.addEventListener('click', startRestartGame)
+
