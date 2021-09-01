@@ -69,7 +69,6 @@ const getFirstEmptyCellInCol = colIndex => {
       return cell
     } 
   }
-    return null
 }
 
 
@@ -249,14 +248,12 @@ const checkStatusOfGame = cell => {
       currentPlayer.classList.add('hide')
       result.classList.remove('hide')
       result.innerHTML = `${player} wins!`
-      startRestartBtn.innerHTML = "Restart"
       }
   } else {
       isGameLive = false
       currentPlayer.classList.add('hide')
       result.classList.remove('hide')
       result.innerHTML = "It's a TIE!"
-      startRestartBtn.innerHTML = "Restart"
       }
 }
 
@@ -295,10 +292,8 @@ const handleCellClick = event => {
       if (play >= 7) {
         checkStatusOfGame(cell)
       }
-    } else {
-      return
     }
-}
+  }
 }
 
 
@@ -314,7 +309,6 @@ const handleCellMouseOver = event => {
     }
   }
 }
-
 
 
 //EVENT LISTENERS
